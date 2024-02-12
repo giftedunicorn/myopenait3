@@ -3,11 +3,11 @@
 
 import { sql } from "drizzle-orm";
 import {
-  index,
-  pgTableCreator,
-  serial,
-  timestamp,
-  text,
+    index,
+    pgTableCreator,
+    serial,
+    timestamp,
+    text,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -19,17 +19,17 @@ import {
 const createTable = pgTableCreator((name) => `${name}`);
 
 export const messages = createTable(
-  "message",
-  {
-    id: serial("id").primaryKey(),
-    chatId: serial("chat_id").notNull(),
-    content: text("content"),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updatedAt"),
-  },
-  (example) => ({
-    chatIdIndex: index("chat_id_idx").on(example.chatId),
-  })
+    "message",
+    {
+        id: serial("id").primaryKey(),
+        chatId: serial("chat_id").notNull(),
+        content: text("content"),
+        createdAt: timestamp("created_at")
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updatedAt"),
+    },
+    (example) => ({
+        chatIdIndex: index("chat_id_idx").on(example.chatId),
+    })
 );

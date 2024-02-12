@@ -9,23 +9,23 @@ export const chatRouter = createTRPCRouter({
         return ctx.db.query.chats.findMany();
     }),
 
-  create: publicProcedure
-    .input(z.object({ title: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(chats).values({
-        title: input.title,
-      });
-    }),
+    create: publicProcedure
+        .input(z.object({ title: z.string().min(1) }))
+        .mutation(async ({ ctx, input }) => {
+            await ctx.db.insert(chats).values({
+                title: input.title,
+            });
+        }),
 
-  getChatById: publicProcedure
-    .input(
-      z.object({
-        chatId: z.number(),
-      }),
-    )
-    .query(({ ctx, input: { chatId } }) => {
-      return ctx.db.query.chats.findFirst({
-        where: eq(chats.id, chatId),
-      });
-    }),
+    getChatById: publicProcedure
+        .input(
+            z.object({
+                chatId: z.number(),
+            }),
+        )
+        .query(({ ctx, input: { chatId } }) => {
+            return ctx.db.query.chats.findFirst({
+                where: eq(chats.id, chatId),
+            });
+        }),
 });

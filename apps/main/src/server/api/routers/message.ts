@@ -9,23 +9,23 @@ export const messageRouter = createTRPCRouter({
         return ctx.db.query.users.findMany();
     }),
 
-  create: publicProcedure
-    .input(z.object({ content: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(messages).values({
-        content: input.content,
-      });
-    }),
+    create: publicProcedure
+        .input(z.object({ content: z.string().min(1) }))
+        .mutation(async ({ ctx, input }) => {
+            await ctx.db.insert(messages).values({
+                content: input.content,
+            });
+        }),
 
-  getMessageById: publicProcedure
-    .input(
-      z.object({
-        messageId: z.number(),
-      }),
-    )
-    .query(({ ctx, input: { messageId } }) => {
-      return ctx.db.query.messages.findFirst({
-        where: eq(messages.id, messageId),
-      });
-    }),
+    getMessageById: publicProcedure
+        .input(
+            z.object({
+                messageId: z.number(),
+            }),
+        )
+        .query(({ ctx, input: { messageId } }) => {
+            return ctx.db.query.messages.findFirst({
+                where: eq(messages.id, messageId),
+            });
+        }),
 });

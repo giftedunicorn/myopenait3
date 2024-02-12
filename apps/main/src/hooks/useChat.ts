@@ -2,12 +2,12 @@ import {
     useState, 
     useCallback, 
     useRef, 
-    ChangeEvent, 
-    FormEvent,
+    type ChangeEvent, 
+    type FormEvent,
     useEffect,
-} from 'react';
-import { Message } from '~/types';
-import { createChunkDecoder, nanoid } from '~/utils';
+} from "react";
+import { type Message } from "~/types";
+import { createChunkDecoder, nanoid } from "~/utils";
 
 type UseChatProps = {
     api?: string;
@@ -27,9 +27,9 @@ type UseChatHelpers = {
 };
 
 export function useChat({
-    api='/api/chat',
+    api="/api/chat",
     id,
-    initialInput = '',
+    initialInput = "",
     initialMessages = [],
 }: UseChatProps = {}) : UseChatHelpers {
     const [input, setInput] = useState(initialInput);
@@ -48,7 +48,7 @@ export function useChat({
             if (!text) return;
 
             const res = await fetch(api, {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify({
                     prompt: text,
                 }),
@@ -56,16 +56,16 @@ export function useChat({
             })
         
             if (!res.ok) {
-                throw new Error((await res.text()) || 'Failed to fetch chat messages');
+                throw new Error((await res.text()) || "Failed to fetch chat messages");
             } 
 
             if (!res.body) {
-                throw new Error('Response body is empty');
+                throw new Error("Response body is empty");
             }
 
             const reader = res.body.getReader()
             const decoder = createChunkDecoder()
-            let result = ``
+            let result = ""
 
             while (true) {
                 const { done, value } = await reader.read()
@@ -79,7 +79,7 @@ export function useChat({
                 const newMessage: Message = {
                     id: nanoid(),
                     text: result,
-                    role: 'assistant',
+                    role: "assistant",
                     createdAt: new Date(),
                 }
                 // will push multiple items to array for one streaming message
@@ -104,7 +104,7 @@ export function useChat({
         const userMessage: Message = {
             id: nanoid(),
             text,
-            role: 'user',
+            role: "user",
             createdAt: new Date(),
         };
 

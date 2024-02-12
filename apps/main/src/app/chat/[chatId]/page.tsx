@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import MessageCard from "~/components/MessageCard"
 // import { Message } from "~/types"

@@ -3,11 +3,11 @@
 
 import { sql } from "drizzle-orm";
 import {
-  index,
-  pgTableCreator,
-  serial,
-  timestamp,
-  varchar,
+    index,
+    pgTableCreator,
+    serial,
+    timestamp,
+    varchar,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -19,16 +19,16 @@ import {
 const createTable = pgTableCreator((name) => `${name}`);
 
 export const users = createTable(
-  "user",
-  {
-    id: serial("id").primaryKey(),
-    email: varchar("email", { length: 256 }),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updatedAt"),
-  },
-  (example) => ({
-    emailIndex: index("email_idx").on(example.email),
-  })
+    "user",
+    {
+        id: serial("id").primaryKey(),
+        email: varchar("email", { length: 256 }),
+        createdAt: timestamp("created_at")
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updatedAt"),
+    },
+    (example) => ({
+        emailIndex: index("email_idx").on(example.email),
+    })
 );
