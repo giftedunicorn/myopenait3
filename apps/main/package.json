@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "start": "next start",
     "db:drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check:pg",

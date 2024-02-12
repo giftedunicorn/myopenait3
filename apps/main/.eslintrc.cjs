@@ -31,6 +31,8 @@ const config = {
         checksVoidReturn: { attributes: false },
       },
     ],
+    "indent": ["error", 4],
+    "quotes": ["error", "double"]
   },
 };
 
