@@ -5,7 +5,7 @@ import MessageCard from "~/components/MessageCard"
 import { useChat } from "~/hooks/useChat"
 
 const Page = () => {
-    const{ messages, input, handleSubmit, handleInputChange, isLoading, stop, reload } = useChat()
+    const{ messages, input, handleSubmit, handleInputChange } = useChat()
     
     return (
         <div className="flex h-full flex-col w-full max-w-xl pb-36 pt-9 mx-auto stretch">
