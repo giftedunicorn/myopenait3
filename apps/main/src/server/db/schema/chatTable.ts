@@ -18,17 +18,17 @@ import {
  */
 const createTable = pgTableCreator((name) => `${name}`);
 
-export const posts = createTable(
-  "post",
+export const chats = createTable(
+  "chat",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    title: varchar("title", { length: 256 }),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updatedAt"),
   },
   (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+    titleIndex: index("title_idx").on(example.title),
   })
 );

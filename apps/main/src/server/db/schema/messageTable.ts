@@ -7,7 +7,7 @@ import {
   pgTableCreator,
   serial,
   timestamp,
-  varchar,
+  text,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -18,17 +18,18 @@ import {
  */
 const createTable = pgTableCreator((name) => `${name}`);
 
-export const posts = createTable(
-  "post",
+export const messages = createTable(
+  "message",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
+    chatId: serial("chat_id").notNull(),
+    content: text("content"),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updatedAt"),
   },
   (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+    chatIdIndex: index("chat_id_idx").on(example.chatId),
   })
 );
