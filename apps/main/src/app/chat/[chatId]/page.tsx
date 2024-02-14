@@ -3,9 +3,16 @@
 import MessageCard from "~/components/MessageCard"
 // import { Message } from "~/types"
 import { useChat } from "~/hooks/useChat"
+import { api } from "~/trpc/react";
 
-const Page = () => {
+export default function Page() {
     const{ messages, input, handleSubmit, handleInputChange } = useChat()
+    const { data: users, isLoading: userIsLoading } = api.user.getUsers.useQuery()
+    const { data: chats, isLoading: chatIsLoading } = api.chat.getChats.useQuery()
+    const { data: messagesData, isLoading: messageIsLoading } = api.message.getMessages.useQuery()
+    console.log(userIsLoading, users)
+    console.log(chatIsLoading, chats)
+    console.log(messageIsLoading, messagesData)
     
     return (
         <div className="flex h-full flex-col w-full max-w-xl pb-36 pt-9 mx-auto stretch">
@@ -32,5 +39,3 @@ const Page = () => {
         </div>
     )
 }
-
-export default Page

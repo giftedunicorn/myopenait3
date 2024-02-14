@@ -1,20 +1,17 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { messages } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import * as messageService from "~/server/api/services/message";
 
 export const messageRouter = createTRPCRouter({
-    get: publicProcedure.query(({ ctx }) => {
-        return ctx.db.query.users.findMany();
+    getMessages: publicProcedure.query(async () => {
+        return await messageService.getMessages()
     }),
 
-    create: publicProcedure
+    createMessage: publicProcedure
         .input(z.object({ content: z.string().min(1) }))
-        .mutation(async ({ ctx, input }) => {
-            await ctx.db.insert(messages).values({
-                content: input.content,
-            });
+        .mutation(async ({ input }) => {
+            await messageService.createMessage({ newMessage: input})
         }),
 
     getMessageById: publicProcedure
@@ -23,9 +20,7 @@ export const messageRouter = createTRPCRouter({
                 messageId: z.number(),
             }),
         )
-        .query(({ ctx, input: { messageId } }) => {
-            return ctx.db.query.messages.findFirst({
-                where: eq(messages.id, messageId),
-            });
+        .query(async ({ input: { messageId } }) => {
+            return await messageService.getMessageById({ messageId })
         }),
 });
