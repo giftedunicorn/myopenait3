@@ -13,16 +13,16 @@ export const api = createTRPCReact<AppRouter>();
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
     const [queryClient] = useState(
         () =>
-          new QueryClient({
-            defaultOptions: {
-              queries: {
-                staleTime: 5 * 1000,
-                refetchOnWindowFocus: false,
-                refetchIntervalInBackground: false,
-              },
-            },
-          }),
-      );
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        staleTime: 5 * 1000,
+                        refetchOnWindowFocus: false,
+                        refetchIntervalInBackground: false,
+                    },
+                },
+            }),
+    );
 
     const [trpcClient] = useState(() =>
         api.createClient({

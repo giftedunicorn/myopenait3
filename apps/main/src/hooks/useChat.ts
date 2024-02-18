@@ -28,7 +28,6 @@ type UseChatHelpers = {
 
 export function useChat({
     api="/api/chat",
-    id,
     initialInput = "",
     initialMessages = [],
 }: UseChatProps = {}) : UseChatHelpers {
@@ -88,7 +87,7 @@ export function useChat({
             }
         }
 
-        fetchData()
+        void fetchData()
     }, [isLoading])
 
     const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
