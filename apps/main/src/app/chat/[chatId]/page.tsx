@@ -21,16 +21,16 @@ export default function Page() {
     
     return (
         <div className="flex h-full flex-col w-full max-w-xl pb-36 pt-9 mx-auto stretch">
+            <div>
+                <div>current: {count}</div>
+                <button className='button' onClick={() => increaseOnClick()}>increase</button>
+            </div>
+
             <ul className="space-y-4">
                 {messages.map((message) => (
                     <MessageCard key={message.id} message={message} />
                 ))}
             </ul>
-
-            <div>
-                <div>current: {count}</div>
-                <button className='button' onClick={() => increaseOnClick()}>increase</button>
-            </div>
 
             <div className="fixed w-full left-0 bottom-0 py-4 bg-gray-100 border-t border-t-gray-300">
                 <form onSubmit={handleSubmit} className="max-w-xl w-full mx-auto relative">

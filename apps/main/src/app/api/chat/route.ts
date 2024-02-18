@@ -1,24 +1,17 @@
-import OpenAI from "openai";
-import { OpenAIStream, StreamingTextResponse } from "ai"
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
-
-export const runtime = "edge";
+import { openaiChat } from "~/server/api/chat/openai";
 
 export async function POST(req: Request) {
-    // get parameters from request
+    console.log("api chat called")
     const { prompt } = await req.json()
+    const stream =  await openaiChat(prompt)
 
-    const response = await openai.chat.completions.create({
-        model: "gpt-4",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.6,
-        max_tokens: 300,
-        stream: true,
-    })
-
-    const stream = OpenAIStream(response)
-    return new StreamingTextResponse(stream)
+    return new Response(stream, {
+        headers: {
+            "Content-Type": "text/event-stream; charset=utf-8",
+            Connection: "keep-alive",
+            "Cache-Control": "no-cache, no-transform",
+            "X-Accel-Buffering": "no",
+            "Content-Encoding": "none",
+        },
+    });
 }
